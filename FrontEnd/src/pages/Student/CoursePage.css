@@ -1,0 +1,75 @@
+/* CoursePage.css */
+
+.course-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .course-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .course-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .course-name {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .enroll-button,
+  .unenroll-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+  
+  .details-link {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+  
+  .dashboard-link {
+    display: block;
+    text-decoration: none;
+    color: #007bff;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+  
+  .confirmation-modal {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .confirmation-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+  

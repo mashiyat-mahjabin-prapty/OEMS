@@ -1,0 +1,10 @@
+UPDATE public.question
+SET type = 'MCQ'
+WHERE question_id = 3;
+
+
+INSERT INTO question (question_id, question_stmt, option1, option2, option3, option4, answer)
+VALUES (3, 'Who is the national poet of Bangladesh?', 'Jashimuddin', 'Jibonando Das', 'Kazi Najrul Islam', 'Modhushudon Dutta', 'Kazi Najrul Islam');
+
+INSERT INTO public.question_exam (question_question_id, exam_exam_id)
+VALUES (3, 1);

@@ -1,0 +1,71 @@
+UPDATE public.question
+SET type = 'MCQ'
+WHERE question_id = 3;
+
+
+INSERT INTO question (question_id, question_stmt, option1, option2, option3, option4, answer)
+VALUES (3, 'Who is the national poet of Bangladesh?', 'Jashimuddin', 'Jibonando Das', 'Kazi Najrul Islam', 'Modhushudon Dutta', 'Kazi Najrul Islam');
+
+INSERT INTO public.question_exam (question_question_id, exam_exam_id)
+VALUES (3, 1);
+
+
+
+
+
+
+
+
+const ExamStudent = require('../models/exam_student'); // Import the ExamStudent model
+
+exports.submitExamAnswers = async (req, res) => {
+  try {
+    const { examId } = req.params;
+    const { answers } = req.body;
+
+    // Calculate the student's score
+    let score = 0;
+
+    const questionExamEntries = await QuestionExam.findAll({
+      where: { exam_exam_id: examId },
+    });
+
+    // using the id of question from question exam table, fetch the correct answer from question table  
+    for (const entry of questionExamEntries) {
+      const questionId = entry.question_question_id;
+      const question = await Question.findByPk(questionId);
+      const correctAnswer = question.answer;
+      const studentAnswer = answers[questionId];
+
+      if (correctAnswer === studentAnswer) {
+        score++;
+      }
+    }
+
+    // Save the student's score to the database
+    const { stu_id } = req.user; // Assuming you have the student's ID from authentication middleware
+    const obtainedMarks = score;
+
+    const examStudentEntry = await ExamStudent.findOne({
+      where: { exam_exam_id: examId, student_stu_id: stu_id },
+    });
+
+    if (examStudentEntry) {
+      // If the entry already exists, update the obtained_marks value
+      examStudentEntry.obtained_marks = obtainedMarks;
+      await examStudentEntry.save();
+    } else {
+      // If the entry does not exist, create a new entry
+      await ExamStudent.create({
+        exam_exam_id: examId,
+        student_stu_id: stu_id,
+        obtained_marks: obtainedMarks,
+      });
+    }
+
+    res.status(200).json({ score });
+  } catch (err) {
+    console.error('Error in submitting exam answers:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
